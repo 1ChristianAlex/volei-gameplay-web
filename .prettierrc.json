@@ -1,0 +1,24 @@
+{
+  "singleQuote": true,
+  "endOfLine": "auto",
+  "parser": "typescript",
+  "tabWidth": 2,
+  "printWidth": 90,
+
+  "overrides": [
+    {
+      "files": ["**/*.html"],
+      "options": {
+        "parser":"html"
+      }
+    },
+    {
+      "files": ["**/*.scss"],
+      "options": {
+        "parser":"scss"
+      }
+    }
+  ]
+
+  
+}

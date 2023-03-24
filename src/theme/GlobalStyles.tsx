@@ -1,6 +1,6 @@
-import styled from '@suid/system/styled';
+import { styledApp } from './theme';
 
-const MyThemeComponent = styled('div')(({ theme }) => ({
+const MyThemeComponent = styledApp('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
   minWidth: '100vw',
   minHeight: '100vh',

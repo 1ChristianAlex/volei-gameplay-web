@@ -1,23 +1,44 @@
-import { red, grey } from '@suid/material/colors';
+import { blue, orange, common } from '@suid/material/colors';
 import { createTheme } from '@suid/material/styles';
+import createStyled from '@suid/system/createStyled';
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: red[500],
+      main: blue[800],
+      contrastText: common.white,
     },
     secondary: {
-      main: grey[500],
+      main: orange[600],
+      contrastText: common.white,
     },
     background: {
-      default: '#1a1a1a',
-      paper: grey[200],
+      default: '#f2f2f2',
     },
     text: {
-      primary: '#ffffff',
-      secondary: grey[500],
+      primary: '#333',
+    },
+  },
+  typography: {
+    fontFamily: 'Roboto, sans-serif',
+    fontSize: 16,
+    fontWeightLight: 300,
+    fontWeightRegular: 400,
+    fontWeightMedium: 500,
+  },
+
+  components: {
+    MuiButton: {
+      defaultProps: {
+        style: {
+          'text-transform': 'none',
+          'min-height': '50px',
+        },
+      },
     },
   },
 });
 
-export default theme;
+const styledApp = createStyled({ onUseTheme: () => theme });
+
+export { styledApp, theme };

@@ -1,7 +1,7 @@
-import styled from '@suid/system/styled';
-import { Paper } from '@suid/material';
+import { A } from '@solidjs/router';
+import { styledApp } from '@theme/theme';
 
-const PaperContainer = styled('div')({
+const PageCenterContainer = styledApp('div')({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
@@ -10,10 +10,13 @@ const PaperContainer = styled('div')({
   margin: '0 auto',
 });
 
-const PaperForm = styled(Paper)((props) => ({
-  padding: 16,
-  backgroundColor: props.theme.palette.background.paper,
-  width: '100%',
+const LinkRegister = styledApp(A)((stl) => ({
+  margin: '16px auto',
+  fontSize: 16,
+  display: 'flex',
+  width: 'fit-content',
+  fontFamily: stl.theme.typography.fontFamily,
+  textDecoration: 'none',
 }));
 
-export { PaperContainer, PaperForm };
+export { PageCenterContainer, LinkRegister };

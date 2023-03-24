@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "./src",
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "node",
@@ -9,6 +10,22 @@
     "jsxImportSource": "solid-js",
     "types": ["vite/client"],
     "noEmit": true,
-    "isolatedModules": true
+    "isolatedModules": true, 
+    "paths": {
+      "@theme/*":[
+        "theme/*"
+      ],
+      "@app/*":[
+        "app/*"
+      ],
+      "@lib/*":[
+        "lib/*"
+      ],
+      "@modules/*":[
+        "modules/*"
+      ],
+   
+
+    }
   }
 }
