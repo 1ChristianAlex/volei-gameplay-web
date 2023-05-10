@@ -1,5 +1,5 @@
-import { Component, createSignal, Show, For, createEffect, on } from 'solid-js';
-import { Alert, Button, Grid } from '@suid/material';
+import { Component, createSignal, createEffect, on } from 'solid-js';
+import { Grid } from '@suid/material';
 import { BoxSpacing, DontHaveAccountText, LoginFormContainer } from './styles';
 import { IconButton } from '@suid/material';
 import LoginFormModel from './model/login-form-model';
@@ -15,7 +15,7 @@ const LoginFormAction: Component = () => {
   const [password, setPassword] = createSignal('');
   const [showPassword, setShowPassword] = createSignal(false);
 
-  const [formErros, setFormErros] = createSignal<string[]>([]);
+  const [formErros, setFormErros] = createSignal<ValidationError[]>([]);
 
   const validateForm = async () => {
     try {
@@ -27,18 +27,30 @@ const LoginFormAction: Component = () => {
       await validateOrReject(form);
     } catch (errors) {
       if (Array.isArray(errors)) {
-        const validationErros = errors
-          .map((err) => {
-            if (err instanceof ValidationError) {
-              return Object.values(err.constraints);
-            }
-          })
-          .filter(Boolean)
-          .flat();
+        const validationErros = errors.filter((err) => {
+          if (err instanceof ValidationError) {
+            return Object.values(err.constraints);
+          }
+          return false;
+        });
 
         setFormErros(validationErros);
       }
     }
+  };
+
+  const getErrorByProperty = (propertyName: string) => {
+    if (!!formErros().length) {
+      const errorItem = formErros().find((err) => err.property === propertyName);
+
+      if (errorItem?.constraints) {
+        const [message] = Object.values(errorItem.constraints);
+        const [first, ...rest] = Array.from(message);
+        return [first.toUpperCase(), ...rest].join('');
+      }
+    }
+
+    return '';
   };
 
   createEffect(
@@ -58,7 +70,8 @@ const LoginFormAction: Component = () => {
               setEmail(value);
             }}
             label="Email ou telefone"
-            error={!!formErros().length}
+            error={!!getErrorByProperty('email')}
+            helperText={getErrorByProperty('email')}
           />
         </Grid>
         <Grid item>
@@ -72,7 +85,8 @@ const LoginFormAction: Component = () => {
                 }}
                 type={showPassword() ? 'text' : 'password'}
                 label="Senha"
-                error={!!formErros().length}
+                error={!!getErrorByProperty('password')}
+                helperText={getErrorByProperty('password')}
                 InputProps={{
                   endAdornment: (
                     <IconButton
@@ -90,16 +104,6 @@ const LoginFormAction: Component = () => {
             </Grid>
           </Grid>
         </Grid>
-
-        <Show when={!!formErros().length}>
-          <For each={formErros()}>
-            {(item) => (
-              <Grid item>
-                <Alert severity="error">{item}</Alert>
-              </Grid>
-            )}
-          </For>
-        </Show>
         <BoxSpacing />
         <Grid item>
           <RoudedButton
