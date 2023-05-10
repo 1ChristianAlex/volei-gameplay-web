@@ -5,14 +5,18 @@ import { Router } from '@solidjs/router';
 import './theme/reset.css';
 import AppRoutes from '@app/Routes';
 import { theme } from '@theme/theme';
+import { MetaProvider, Title } from '@solidjs/meta';
 
 const App: Component = () => (
   <ThemeProvider theme={theme}>
-    <MyThemeComponent>
-      <Router>
-        <AppRoutes />
-      </Router>
-    </MyThemeComponent>
+    <MetaProvider>
+      <Title>Volaje</Title>
+      <MyThemeComponent>
+        <Router>
+          <AppRoutes />
+        </Router>
+      </MyThemeComponent>
+    </MetaProvider>
   </ThemeProvider>
 );
 

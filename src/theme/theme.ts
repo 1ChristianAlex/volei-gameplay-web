@@ -1,31 +1,32 @@
-import { blue, orange, common } from '@suid/material/colors';
+import { common } from '@suid/material/colors';
 import { createTheme } from '@suid/material/styles';
 import createStyled from '@suid/system/createStyled';
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: blue[800],
+      main: '#395597',
       contrastText: common.white,
     },
     secondary: {
-      main: orange[600],
+      main: '#FF9500',
       contrastText: common.white,
     },
     background: {
-      default: '#f2f2f2',
+      default: '#FFFFFF',
     },
     text: {
       primary: '#333',
     },
   },
   typography: {
-    fontFamily: 'Roboto, sans-serif',
+    fontFamily: 'Archivo, sans-serif',
     fontSize: 16,
     fontWeightLight: 300,
     fontWeightRegular: 400,
     fontWeightMedium: 500,
   },
+  spacing: 8,
 
   components: {
     MuiButton: {

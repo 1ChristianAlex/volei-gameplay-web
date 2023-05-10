@@ -1,7 +1,7 @@
 import { Button } from '@suid/material';
 import { Grid } from '@suid/material';
 import { Component } from 'solid-js';
-import volei from '../../assets/bola-de-voleibol-1.png';
+import volei from '../../assets/logo.png';
 import { JoinPageContentWidth, LetPlayText, ButtonImage } from './styles';
 
 const JoinGamePage: Component = () => (

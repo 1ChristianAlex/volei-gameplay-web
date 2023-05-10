@@ -6,6 +6,7 @@
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+    "experimentalDecorators": true,
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
     "types": ["vite/client"],
@@ -24,8 +25,10 @@
       "@modules/*":[
         "modules/*"
       ],
-   
-
-    }
+      "@components/*":[
+        "components/*"
+      ],
+    },
   }
+  
 }

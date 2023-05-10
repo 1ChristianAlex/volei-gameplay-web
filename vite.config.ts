@@ -18,6 +18,7 @@ export default defineConfig({
       '@app': resolve(__dirname, join('./src/app')),
       '@lib': resolve(__dirname, join('./src/lib')),
       '@modules': resolve(__dirname, join('./src/modules')),
+      '@components': resolve(__dirname, join('./src/components')),
     },
   },
 });

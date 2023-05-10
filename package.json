@@ -25,10 +25,12 @@
     "vite-plugin-solid": "^2.6.1"
   },
   "dependencies": {
+    "@solidjs/meta": "^0.28.4",
     "@solidjs/router": "^0.8.1",
     "@suid/icons-material": "^0.5.11",
     "@suid/material": "^0.11.1",
     "@suid/vite-plugin": "^0.1.2",
+    "class-validator": "^0.14.0",
     "solid-js": "^1.6.10"
   }
 }

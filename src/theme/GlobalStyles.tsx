@@ -7,4 +7,9 @@ const MyThemeComponent = styledApp('div')(({ theme }) => ({
   fontFamily: theme.typography.fontFamily,
 }));
 
-export { MyThemeComponent };
+const CommonPagePading = styledApp('div')({
+  padding: '0 24px',
+  height: '100vh',
+});
+
+export { MyThemeComponent, CommonPagePading };
