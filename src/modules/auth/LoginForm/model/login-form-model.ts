@@ -1,11 +1,14 @@
-import { IsEmail, IsString, Min } from 'class-validator';
+import { LANG } from '@lang/pt';
+import { IsEmail, Min } from 'class-validator';
 
 class LoginFormModel {
-  @IsEmail()
+  @IsEmail({}, { message: LANG.MUST_BE_EMAIL })
   public email: string;
 
-  @IsString()
-  @Min(8)
+  @Min(8, {
+    message: (validationArguments) =>
+      `${LANG.MUST_BE_LESS_THAN} ${validationArguments.constraints.at(0)}`,
+  })
   public password: string;
   constructor(data: LoginFormModel) {
     Object.assign(this, data);

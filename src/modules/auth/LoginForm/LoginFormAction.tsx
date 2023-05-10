@@ -27,12 +27,7 @@ const LoginFormAction: Component = () => {
       await validateOrReject(form);
     } catch (errors) {
       if (Array.isArray(errors)) {
-        const validationErros = errors.filter((err) => {
-          if (err instanceof ValidationError) {
-            return Object.values(err.constraints);
-          }
-          return false;
-        });
+        const validationErros = errors.filter((err) => err instanceof ValidationError);
 
         setFormErros(validationErros);
       }

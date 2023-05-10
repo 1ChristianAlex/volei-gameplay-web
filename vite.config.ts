@@ -19,6 +19,7 @@ export default defineConfig({
       '@lib': resolve(__dirname, join('./src/lib')),
       '@modules': resolve(__dirname, join('./src/modules')),
       '@components': resolve(__dirname, join('./src/components')),
+      '@lang': resolve(__dirname, join('./src/lang')),
     },
   },
 });
