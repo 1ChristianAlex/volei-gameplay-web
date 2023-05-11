@@ -1,23 +1,15 @@
-import { Component, createSignal, For, createEffect, on } from 'solid-js';
+import { Component, createSignal } from 'solid-js';
 import { Grid, IconButton } from '@suid/material';
 import ArrowBackIosNewOutlinedIcon from '@suid/icons-material/ArrowBackIosNewOutlined';
 import ArrowForwardIosOutlinedIcon from '@suid/icons-material/ArrowForwardIosOutlined';
-import { daysOfWeek, months } from './calendar.constants';
-import {
-  CalendarContent,
-  CalendarHint,
-  CalendarHintCircle,
-  DaysOfMonth,
-  DaysOfMonthGrid,
-  DaysOfYearCircle,
-  MonthLabel,
-  YearLabel,
-} from './styled';
-import { CalendarItem } from './model/CalendarItem';
+import { months } from './calendar.constants';
+import { MonthLabel, YearLabel } from './styled';
+import CalendarDaysContent from './CalendarDaysContent';
+import CalendarHintContainer from './CalendarHintContainer';
+import { Transition } from 'solid-transition-group';
 
 const Calendar: Component = () => {
   const [calendarDate, setCalendarDate] = createSignal(new Date());
-  const [calendarDays, setCalendarDays] = createSignal<CalendarItem[]>([]);
 
   const changeMonth = (increase: boolean) => {
     setCalendarDate((current) => {
@@ -25,53 +17,6 @@ const Calendar: Component = () => {
       return new Date(new Date(current).setMonth(monthIndex));
     });
   };
-
-  const getDays = async () => {
-    const calDate = calendarDate();
-    const dayOneMonth = new Date(calDate);
-
-    dayOneMonth.setDate(1);
-
-    const days: CalendarItem[] = [];
-
-    if (dayOneMonth.getDay() !== 0) {
-      const dayRegress = dayOneMonth.getDay();
-
-      dayOneMonth.setDate(dayOneMonth.getDate() - dayRegress);
-    }
-
-    const today = new Date();
-
-    while (
-      dayOneMonth.getMonth() <= calDate.getMonth() &&
-      calDate.getFullYear() === dayOneMonth.getFullYear()
-    ) {
-      const dateIncrease = dayOneMonth.getDate();
-
-      const isFriday = dayOneMonth.getDay() === 5;
-
-      const randomMock = !!(Math.floor(Math.random() * 10) % 2);
-
-      days.push(
-        new CalendarItem({
-          isCanceled: isFriday && randomMock,
-          isScheduled: isFriday && !randomMock,
-          isToday: today.toLocaleDateString() === dayOneMonth.toLocaleDateString(),
-          isLastMonth: dayOneMonth.getMonth() < calDate.getMonth(),
-          day: dateIncrease,
-        })
-      );
-
-      dayOneMonth.setDate(dateIncrease + 1);
-    }
-    setCalendarDays(days);
-  };
-
-  createEffect(
-    on([calendarDate], () => {
-      getDays();
-    })
-  );
 
   return (
     <Grid container direction="column">
@@ -116,61 +61,25 @@ const Calendar: Component = () => {
         </Grid>
       </Grid>
       <Grid item>
-        <CalendarContent>
-          <Grid container direction="column" spacing={1}>
-            <Grid item>
-              <Grid container textAlign="center">
-                <For each={daysOfWeek}>
-                  {(item) => (
-                    <Grid item xs>
-                      <DaysOfYearCircle>{item.charAt(0).toUpperCase()}</DaysOfYearCircle>
-                    </Grid>
-                  )}
-                </For>
-              </Grid>
-            </Grid>
-            <Grid item>
-              <DaysOfMonthGrid>
-                <For each={calendarDays()}>
-                  {(item) => (
-                    <DaysOfMonth
-                      ownerState={{
-                        isLastMonth: item.isLastMonth,
-                        isToday: item.isToday,
-                        isCanceled: item.isCanceled,
-                        isScheduled: item.isScheduled,
-                      }}
-                    >
-                      {item.day}
-                    </DaysOfMonth>
-                  )}
-                </For>
-              </DaysOfMonthGrid>
-            </Grid>
-          </Grid>
-        </CalendarContent>
+        <Transition
+          onEnter={(el, done) => {
+            const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
+              duration: 600,
+            });
+            a.finished.then(done);
+          }}
+          onExit={(el, done) => {
+            const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
+              duration: 600,
+            });
+            a.finished.then(done);
+          }}
+        >
+          <CalendarDaysContent calendarDate={calendarDate} />
+        </Transition>
       </Grid>
       <Grid item>
-        <Grid container spacing={2}>
-          <Grid item>
-            <CalendarHint>
-              <CalendarHintCircle ownerState={{ isToday: true }} />
-              Hoje
-            </CalendarHint>
-          </Grid>
-          <Grid item>
-            <CalendarHint>
-              <CalendarHintCircle ownerState={{ isScheduled: true }} />
-              Agendado
-            </CalendarHint>
-          </Grid>
-          <Grid item>
-            <CalendarHint>
-              <CalendarHintCircle ownerState={{ isCanceled: true }} />
-              Cancelado
-            </CalendarHint>
-          </Grid>
-        </Grid>
+        <CalendarHintContainer />
       </Grid>
     </Grid>
   );
