@@ -1,6 +1,6 @@
 import { Component } from 'solid-js';
 import { Outlet } from '@solidjs/router';
-import { HeaderContainer, LoggedContainer, UserNameLabel } from './styled';
+import { HeaderContainer, LoggedContainer, MainContainer, UserNameLabel } from './styled';
 import { Grid, useTheme } from '@suid/material';
 import PersonOutlineOutlinedIcon from '@suid/icons-material/PersonOutlineOutlined';
 
@@ -26,7 +26,9 @@ const UserHeader: Component = () => {
           </HeaderContainer>
         </Grid>
         <Grid item>
-          <Outlet />
+          <MainContainer>
+            <Outlet />
+          </MainContainer>
         </Grid>
       </Grid>
     </LoggedContainer>

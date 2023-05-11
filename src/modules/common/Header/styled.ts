@@ -8,7 +8,11 @@ const HeaderContainer = styledApp('header')({
 });
 
 const LoggedContainer = styledApp('div')({
-  height: '100vh',
+  height: 'calc(100vh - (17.06vh - (36px * 2)))',
+});
+
+const MainContainer = styledApp('main')({
+  padding: '0 24px',
 });
 
 const UserNameLabel = styledApp('span')((stl) => ({
@@ -17,4 +21,4 @@ const UserNameLabel = styledApp('span')((stl) => ({
   color: stl.theme.palette.primary.contrastText,
 }));
 
-export { HeaderContainer, LoggedContainer, UserNameLabel };
+export { HeaderContainer, LoggedContainer, UserNameLabel, MainContainer };
