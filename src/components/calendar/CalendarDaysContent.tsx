@@ -31,10 +31,11 @@ const CalendarDaysContent: Component<CalendarDaysContentProps> = (props) => {
     }
 
     const today = new Date();
-
     while (
-      dayOneMonth.getMonth() <= calDate.getMonth() &&
-      calDate.getFullYear() === dayOneMonth.getFullYear()
+      (dayOneMonth.getMonth() <= calDate.getMonth() &&
+        calDate.getFullYear() === dayOneMonth.getFullYear()) ||
+      (calDate.getFullYear() !== dayOneMonth.getFullYear() &&
+        dayOneMonth.getMonth() >= calDate.getMonth())
     ) {
       const dateIncrease = dayOneMonth.getDate();
 
