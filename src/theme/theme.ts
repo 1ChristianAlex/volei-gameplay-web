@@ -38,6 +38,13 @@ const theme = createTheme({
         },
       },
     },
+    MuiSvgIcon: {
+      defaultProps: {
+        style: {
+          display: 'flex',
+        },
+      },
+    },
   },
 });
 

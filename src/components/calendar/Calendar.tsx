@@ -6,7 +6,6 @@ import { months } from './calendar.constants';
 import { MonthLabel, YearLabel } from './styled';
 import CalendarDaysContent from './CalendarDaysContent';
 import CalendarHintContainer from './CalendarHintContainer';
-import { Transition } from 'solid-transition-group';
 
 const Calendar: Component = () => {
   const [calendarDate, setCalendarDate] = createSignal(new Date());
@@ -61,22 +60,7 @@ const Calendar: Component = () => {
         </Grid>
       </Grid>
       <Grid item>
-        <Transition
-          onEnter={(el, done) => {
-            const a = el.animate([{ opacity: 0 }, { opacity: 1 }], {
-              duration: 600,
-            });
-            a.finished.then(done);
-          }}
-          onExit={(el, done) => {
-            const a = el.animate([{ opacity: 1 }, { opacity: 0 }], {
-              duration: 600,
-            });
-            a.finished.then(done);
-          }}
-        >
-          <CalendarDaysContent calendarDate={calendarDate} />
-        </Transition>
+        <CalendarDaysContent calendarDate={calendarDate} />
       </Grid>
       <Grid item>
         <CalendarHintContainer />

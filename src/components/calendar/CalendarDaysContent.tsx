@@ -1,5 +1,5 @@
 import { Grid } from '@suid/material';
-import { Accessor, Component, For, createEffect, createSignal, on } from 'solid-js';
+import { Accessor, Component, For, Show, createEffect, createSignal, on } from 'solid-js';
 import { daysOfWeek } from './calendar.constants';
 import {
   CalendarContent,
@@ -8,13 +8,12 @@ import {
   DaysOfMonth,
 } from './styled';
 import { CalendarItem } from './model/CalendarItem';
-
 interface CalendarDaysContentProps {
   calendarDate: Accessor<Date>;
 }
 
 const CalendarDaysContent: Component<CalendarDaysContentProps> = (props) => {
-  const [calendarDays, setCalendarDays] = createSignal<CalendarItem[]>([]);
+  const [calendarDays, setCalendarDays] = createSignal(new Map<number, CalendarItem[]>());
 
   const getDays = async () => {
     const calDate = props.calendarDate();
@@ -55,7 +54,12 @@ const CalendarDaysContent: Component<CalendarDaysContentProps> = (props) => {
 
       dayOneMonth.setDate(dateIncrease + 1);
     }
-    setCalendarDays(days);
+
+    setCalendarDays((current) => {
+      const dateMap = new Map(current.entries());
+      dateMap.set(calDate.getMonth(), days);
+      return dateMap;
+    });
   };
 
   createEffect(
@@ -79,22 +83,28 @@ const CalendarDaysContent: Component<CalendarDaysContentProps> = (props) => {
           </Grid>
         </Grid>
         <Grid item>
-          <DaysOfMonthGrid>
-            <For each={calendarDays()}>
-              {(item) => (
-                <DaysOfMonth
-                  ownerState={{
-                    isLastMonth: item.isLastMonth,
-                    isToday: item.isToday,
-                    isCanceled: item.isCanceled,
-                    isScheduled: item.isScheduled,
-                  }}
-                >
-                  {item.day}
-                </DaysOfMonth>
-              )}
-            </For>
-          </DaysOfMonthGrid>
+          <For each={Array.from(calendarDays().keys())}>
+            {(key) => (
+              <DaysOfMonthGrid>
+                <For each={calendarDays().get(key)}>
+                  {(item) => (
+                    <Show when={key === props.calendarDate().getMonth()}>
+                      <DaysOfMonth
+                        ownerState={{
+                          isLastMonth: item.isLastMonth,
+                          isToday: item.isToday,
+                          isCanceled: item.isCanceled,
+                          isScheduled: item.isScheduled,
+                        }}
+                      >
+                        {item.day}
+                      </DaysOfMonth>
+                    </Show>
+                  )}
+                </For>
+              </DaysOfMonthGrid>
+            )}
+          </For>
         </Grid>
       </Grid>
     </CalendarContent>

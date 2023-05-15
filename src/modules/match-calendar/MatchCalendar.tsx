@@ -3,6 +3,7 @@ import { Grid } from '@suid/material';
 import { Component } from 'solid-js';
 import { PageTitleContainer } from './styled';
 import Calendar from '@components/calendar/Calendar';
+import SwitchButton from '@components/inputs/SwitchButton';
 
 const MatchCalendar: Component = () => {
   return (
@@ -15,6 +16,7 @@ const MatchCalendar: Component = () => {
       <Grid item>
         <Calendar />
       </Grid>
+      <SwitchButton />
     </Grid>
   );
 };
