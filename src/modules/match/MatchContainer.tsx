@@ -12,9 +12,7 @@ const MatchContainer: Component = () => {
       <Outlet />
       <SwitchButton
         onSwitchChange={(isSwithOn) =>
-          navigate(
-            `${APP_ROUTES.MATCH}${isSwithOn ? APP_ROUTES.CALENDAR : APP_ROUTES.GAME_LIST}`
-          )
+          navigate(isSwithOn ? APP_ROUTES.CALENDAR : APP_ROUTES.GAME_LIST)
         }
         defaultIsSwitchOn={location.pathname.includes(APP_ROUTES.CALENDAR)}
       />

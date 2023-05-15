@@ -8,7 +8,12 @@ import CalendarDaysContent from './CalendarDaysContent';
 import CalendarHintContainer from './CalendarHintContainer';
 
 const Calendar: Component = () => {
+  let calendarDivRef: HTMLDivElement;
+
   const [calendarDate, setCalendarDate] = createSignal(new Date());
+
+  const [initialTouch, setInitialTouch] = createSignal<number>(null);
+  const [finalTouch, setFinalTouch] = createSignal<number>(null);
 
   const changeMonth = (increase: boolean) => {
     setCalendarDate((current) => {
@@ -59,7 +64,28 @@ const Calendar: Component = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item>
+      <Grid
+        item
+        onTouchStart={(event) => {
+          setInitialTouch(event.targetTouches.item(0).clientX);
+        }}
+        onTouchMove={(event) => {
+          setFinalTouch(event.targetTouches.item(0).clientX);
+        }}
+        onTouchEnd={() => {
+          let result = finalTouch() - initialTouch();
+
+          if (result < 0) {
+            result = result * -1;
+          }
+
+          if (result >= calendarDivRef.clientWidth * 0.3) {
+            changeMonth(initialTouch() > finalTouch());
+          }
+          console.log(calendarDivRef.clientWidth);
+        }}
+        ref={calendarDivRef}
+      >
         <CalendarDaysContent calendarDate={calendarDate} />
       </Grid>
       <Grid item>
