@@ -4,16 +4,25 @@ import CalendarMonthOutlinedIcon from '@suid/icons-material/CalendarMonthOutline
 import CheckCircleOutlineOutlinedIcon from '@suid/icons-material/CheckCircleOutlineOutlined';
 import { Grid, useTheme } from '@suid/material';
 
-const SwitchButton: Component = () => {
+interface SwitchButtonProps {
+  onSwitchChange: (on: boolean) => void;
+}
+
+const SwitchButton: Component<SwitchButtonProps> = ({ onSwitchChange }) => {
   const [alignPosition, setAlignPosition] = createSignal(true);
   const theme = useTheme();
+
+  const handleSwitchChange = () => {
+    setAlignPosition((current) => !current);
+    onSwitchChange(alignPosition());
+  };
 
   return (
     <FixedButtonContainer>
       <FixedButton
         color="primary"
         variant="text"
-        onClick={() => setAlignPosition((current) => !current)}
+        onClick={handleSwitchChange}
         disableRipple
         disableFocusRipple
         disableTouchRipple
