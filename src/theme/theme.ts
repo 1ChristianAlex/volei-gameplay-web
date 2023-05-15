@@ -19,6 +19,10 @@ const theme = createTheme({
     text: {
       primary: '#333',
     },
+    success: {
+      contrastText: common.white,
+      main: '#399753',
+    },
   },
   typography: {
     fontFamily: 'Archivo, sans-serif',

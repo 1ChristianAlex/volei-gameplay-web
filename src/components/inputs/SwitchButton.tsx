@@ -5,11 +5,15 @@ import CheckCircleOutlineOutlinedIcon from '@suid/icons-material/CheckCircleOutl
 import { Grid, useTheme } from '@suid/material';
 
 interface SwitchButtonProps {
-  onSwitchChange: (on: boolean) => void;
+  onSwitchChange: (isSwithOn: boolean) => void;
+  defaultIsSwitchOn?: boolean;
 }
 
-const SwitchButton: Component<SwitchButtonProps> = ({ onSwitchChange }) => {
-  const [alignPosition, setAlignPosition] = createSignal(true);
+const SwitchButton: Component<SwitchButtonProps> = ({
+  onSwitchChange,
+  defaultIsSwitchOn,
+}) => {
+  const [alignPosition, setAlignPosition] = createSignal(defaultIsSwitchOn ?? true);
   const theme = useTheme();
 
   const handleSwitchChange = () => {

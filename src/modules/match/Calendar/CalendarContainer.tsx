@@ -1,7 +1,7 @@
 import PageTitle from '@components/titles/PageTitle';
 import { Grid } from '@suid/material';
 import { Component } from 'solid-js';
-import { PageTitleContainer } from '../styled';
+import { PageTitleContainer } from './styled';
 import Calendar from '@components/calendar/Calendar';
 
 const CalendarContainer: Component = () => (
