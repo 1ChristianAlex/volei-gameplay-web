@@ -23,7 +23,6 @@ const LoginFormAction: Component = () => {
         email: email(),
         password: password(),
       });
-
       await validateOrReject(form);
     } catch (errors) {
       if (Array.isArray(errors)) {

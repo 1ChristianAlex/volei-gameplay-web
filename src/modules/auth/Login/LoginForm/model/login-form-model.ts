@@ -1,11 +1,11 @@
 import { LANG } from '@lang/pt';
-import { IsEmail, Min } from 'class-validator';
+import { IsEmail, Length } from 'class-validator';
 
 class LoginFormModel {
   @IsEmail({}, { message: LANG.MUST_BE_EMAIL })
   public email: string;
 
-  @Min(8, {
+  @Length(8, undefined, {
     message: (validationArguments) =>
       `${LANG.MUST_BE_LESS_THAN} ${validationArguments.constraints.at(0)}`,
   })

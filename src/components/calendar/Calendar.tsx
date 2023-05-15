@@ -82,7 +82,6 @@ const Calendar: Component = () => {
           if (result >= calendarDivRef.clientWidth * 0.3) {
             changeMonth(initialTouch() > finalTouch());
           }
-          console.log(calendarDivRef.clientWidth);
         }}
         ref={calendarDivRef}
       >
